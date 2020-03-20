@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="referrer" content="never">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="//cdn.bootcss.com/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <title>PAGE_RESULT</title>
+
+    <style>
+        .container {
+            padding-top: 10px;
+        }
+        img{
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="barcode-info">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td><b>产品名称</b></td>
+                        <td id="name"></td>
+                        <td><b>条形码</b></td>
+                        <td id="barcode"></td>
+                    </tr>
+
+                    <tr>
+                        <td><b>品牌</b></td>
+                        <td id="brand"></td>
+                        <td><b>生产厂家</b></td>
+                        <td id="supplier"></td>
+                    </tr>
+
+                    <tr>
+                        <td><b>价格</b></td>
+                        <td id="price"></td>
+                        <td><b></b></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <hr>
+        
+        <div>
+            <div class="row" id="pictures">
+                <div class="col-3">
+                    <img src="http://image8.buy.ccb.com/merchant/201611/498376613/1529980355873_4.jpg"
+                        class="rounded float-left" alt="...">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function showBarCodeInfo(data) {
+
+            if (data.length == 0) {
+                return;
+            }
+            var data = JSON.parse(data)
+            if('data' in data) {
+                data = data.data;
+            }
+            
+            if(data.length == 0) {
+                return;
+            }
+
+            document.getElementById("name").innerText = data.name;
+            document.getElementById("brand").innerText = data.brand;
+            document.getElementById("barcode").innerText = data.barcode;
+            document.getElementById("supplier").innerText = data.supplier;
+            document.getElementById("price").innerText = data.price;
+            
+        }
+
+        function showPictures(data) {
+            var data = JSON.parse(data)
+            if('data' in data) {
+                data = data.data;
+            }
+
+            items = data.items;
+
+            document.getElementById("pictures").innerHTML = "";
+
+            if(items.length == 0) {
+                return;
+            }
+            
+            items.forEach(function(item){  
+                pic = '<div class="col-3"><img src="' + item.url +'" class="rounded float-left" alt="' + item.title +'"></div>';
+                document.getElementById("pictures").innerHTML += pic;
+            });
+
+            // for(j = 0; j < items.length; j++) {
+            //     item = items[j];
+            //     pic = '<div class="col-3"><img src="' + item.url +'" class="rounded float-left" alt="' + item.title +'"></div>';
+            //     document.getElementById("pictures").outerHTML += pic;
+            // } 
+
+        }
+
+    </script>
+
+</body>
+
+</html>
